@@ -113,19 +113,35 @@ module.exports = function (grunt) {
             }
         },
 
+        /**
+         * Copy gif files Tasks
+         * ===============================
+         */
+        copy: {
+            gif: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= paths.src %>/<%= paths.images %>',
+                    src: ['{,*/}*.gif'],
+                    dest: '<%= paths.dist %>/<%= paths.images %>'
+                }]
+            }
+        }
+
     });
 
     [
         'grunt-contrib-connect',
         'grunt-contrib-watch',
         'grunt-contrib-compass',
-        'grunt-contrib-imagemin'
+        'grunt-contrib-imagemin',
+        'grunt-contrib-copy',
     ].forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', 'dev');
 
     grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
 
-    grunt.registerTask('dist', ['imagemin']);
+    grunt.registerTask('dist', ['imagemin', 'copy']);
 
 };
