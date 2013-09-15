@@ -173,8 +173,19 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', 'dev');
 
-    grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
+    grunt.registerTask('dev', [
+        'compass:dev',
+        'connect:dev',
+        'watch'
+    ]);
 
-    grunt.registerTask('dist', ['clean', 'imagemin', 'copy', 'compass:dist', 'premailer:dist', 'connect:dist']);
+    grunt.registerTask('dist', [
+        'clean',
+        'imagemin',
+        'copy',
+        'compass:dist',
+        'premailer:dist',
+        'connect:dist'
+    ]);
 
 };
