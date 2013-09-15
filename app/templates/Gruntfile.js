@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
     'use strict';
 
+    var path = require('path');
+
     // Project configuration.
     grunt.initConfig({
 
@@ -134,6 +136,26 @@ module.exports = function (grunt) {
                     dest: '<%= paths.dist %>/<%= paths.images %>'
                 }]
             }
+        },
+
+        /**
+         * Premailer Parser Tasks
+         * ===============================
+         */
+        premailer: {
+            dist: {
+                //source file path
+                src: '<%= paths.src %>/<%= paths.email %>',
+                // overwrite source file
+                dest: '<%= paths.dist %>/<%= paths.email %>',
+                options: {
+                    //accepts any premailer command line option
+                    //replace mid dashes `-` with camelCase
+                    //ie: --base-url => baseUrl
+                    //see https://github.com/alexdunae/premailer/wiki/Premailer-Command-Line-Usage
+                    baseUrl: '<%= paths.distDomain %>'
+                }
+            }
         }
 
     });
@@ -147,10 +169,12 @@ module.exports = function (grunt) {
         'grunt-contrib-clean',
     ].forEach(grunt.loadNpmTasks);
 
+    grunt.loadTasks(path.normalize(__dirname + '/vendor/tasks'));
+
     grunt.registerTask('default', 'dev');
 
     grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
 
-    grunt.registerTask('dist', ['clean', 'imagemin', 'copy', 'compass:dist']);
+    grunt.registerTask('dist', ['clean', 'imagemin', 'copy', 'compass:dist', 'premailer:dist']);
 
 };

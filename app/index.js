@@ -45,6 +45,10 @@ HtmlEmailGenerator.prototype.prepareMainFiles = function prepareMainFiles() {
     this.copy('Gruntfile.js', 'Gruntfile.js');
 };
 
+HtmlEmailGenerator.prototype.copyPremailerParser = function copyPremailerParser() {
+    this.directory('vendor', 'vendor');
+};
+
 HtmlEmailGenerator.prototype.copyEmailTemplate = function copyEmailTemplate() {
     this.copy('index.html', 'app/index.html');
 };
