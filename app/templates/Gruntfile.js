@@ -75,7 +75,7 @@ module.exports = function (grunt) {
         },
 
         /**
-         * Server Tasks (used internally)
+         * Server Tasks
          * ===============================
          */
         connect: {
@@ -96,6 +96,14 @@ module.exports = function (grunt) {
                     base: '<%= paths.dist %>'
                 }
             }
+        },
+
+        /**
+         * Cleanup Tasks
+         * ===============================
+         */
+        clean: {
+            dist: ['<%= paths.dist %>']
         },
 
         /**
@@ -136,12 +144,13 @@ module.exports = function (grunt) {
         'grunt-contrib-compass',
         'grunt-contrib-imagemin',
         'grunt-contrib-copy',
+        'grunt-contrib-clean',
     ].forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', 'dev');
 
     grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
 
-    grunt.registerTask('dist', ['imagemin', 'copy']);
+    grunt.registerTask('dist', ['clean', 'imagemin', 'copy']);
 
 };
