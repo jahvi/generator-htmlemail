@@ -84,11 +84,11 @@ module.exports = function (grunt) {
             options: {
                 open: true,
                 hostname: 'localhost',
-                port: 8000,
-                livereload: 35729
+                port: 8000
             },
             dev: {
                 options: {
+                    livereload: 35729,
                     base: '<%= paths.src %>'
                 }
             },
@@ -175,6 +175,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
 
-    grunt.registerTask('dist', ['clean', 'imagemin', 'copy', 'compass:dist', 'premailer:dist']);
+    grunt.registerTask('dist', ['clean', 'imagemin', 'copy', 'compass:dist', 'premailer:dist', 'connect:dist']);
 
 };
