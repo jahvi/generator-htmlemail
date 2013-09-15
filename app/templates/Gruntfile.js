@@ -92,10 +92,26 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
+                    keepalive: true,
                     base: '<%= paths.dist %>'
                 }
             }
-        }
+        },
+
+        /**
+         * Images Optimization Tasks
+         * ===============================
+         */
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= paths.src %>/<%= paths.images %>',
+                    src: '{,*/}*.{png,jpg,jpeg}',
+                    dest: '<%= paths.dist %>/<%= paths.images %>'
+                }]
+            }
+        },
 
     });
 
@@ -103,10 +119,13 @@ module.exports = function (grunt) {
         'grunt-contrib-connect',
         'grunt-contrib-watch',
         'grunt-contrib-compass',
+        'grunt-contrib-imagemin'
     ].forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', 'dev');
 
     grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
+
+    grunt.registerTask('dist', ['imagemin']);
 
 };
