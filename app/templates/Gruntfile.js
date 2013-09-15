@@ -31,14 +31,14 @@ module.exports = function (grunt) {
          */
         compass: {
             options: {
+                sassDir: '<%= paths.src %>/scss',
                 outputStyle: 'expanded',
                 httpImagesPath: '/img/'
             },
             dev: {
                 options: {
                     cssDir: '<%= paths.src %>/css',
-                    sassDir: '<%= paths.src %>/scss',
-                    imagesDir: '<%= paths.src %>/img',
+                    imagesDir: '<%= paths.src %>/<%= paths.images %>',
                     noLineComments: false
                 }
             },
@@ -46,9 +46,9 @@ module.exports = function (grunt) {
                 options: {
                     force: true,
                     cssDir: '<%= paths.dist %>/css',
-                    sassDir: '<%= paths.dist %>/scss',
-                    imagesDir: '<%= paths.dist %>/img',
-                    noLineComments: true
+                    imagesDir: '<%= paths.dist %>/<%= paths.images %>',
+                    noLineComments: true,
+                    assetCacheBuster: false
                 }
             }
         },
@@ -151,6 +151,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', ['compass:dev', 'connect:dev', 'watch']);
 
-    grunt.registerTask('dist', ['clean', 'imagemin', 'copy']);
+    grunt.registerTask('dist', ['clean', 'imagemin', 'copy', 'compass:dist']);
 
 };
