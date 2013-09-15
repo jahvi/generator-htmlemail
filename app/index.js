@@ -8,7 +8,7 @@ var HtmlEmailGenerator = module.exports = function HtmlEmailGenerator(args, opti
     yeoman.generators.Base.apply(this, arguments);
 
     this.on('end', function () {
-        this.installDependencies({ skipInstall: options['skip-install'] });
+        // this.installDependencies({ skipInstall: options['skip-install'] });
     });
 
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
@@ -34,4 +34,18 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
 
         cb();
     }.bind(this));
+};
+
+HtmlEmailGenerator.prototype.createMainFolders = function createMainFolders() {
+    this.mkdir('css');
+    this.mkdir('img');
+};
+
+HtmlEmailGenerator.prototype.copySassFiles = function copySassFiles() {
+    this.mkdir('scss');
+    this.copy('scss/style.scss', 'scss/style.scss');
+};
+
+HtmlEmailGenerator.prototype.copyEmailTemplate = function copyEmailTemplate() {
+    this.copy('index.html', 'index.html');
 };
