@@ -8,7 +8,7 @@ var HtmlEmailGenerator = module.exports = function HtmlEmailGenerator(args, opti
     yeoman.generators.Base.apply(this, arguments);
 
     this.on('end', function () {
-        // this.installDependencies({ skipInstall: options['skip-install'] });
+        this.installDependencies({ skipInstall: options['skip-install'], bower: false });
     });
 
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
@@ -36,16 +36,26 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
     }.bind(this));
 };
 
-HtmlEmailGenerator.prototype.createMainFolders = function createMainFolders() {
-    this.mkdir('css');
-    this.mkdir('img');
-};
+HtmlEmailGenerator.prototype.prepareMainFiles = function prepareMainFiles() {
+    this.mkdir('app');
+    this.mkdir('app/css');
+    this.mkdir('app/img');
 
-HtmlEmailGenerator.prototype.copySassFiles = function copySassFiles() {
-    this.mkdir('scss');
-    this.copy('scss/style.scss', 'scss/style.scss');
+    this.template('_package.json', 'package.json');
+    this.copy('Gruntfile.js', 'Gruntfile.js');
 };
 
 HtmlEmailGenerator.prototype.copyEmailTemplate = function copyEmailTemplate() {
-    this.copy('index.html', 'index.html');
+    this.copy('index.html', 'app/index.html');
 };
+
+HtmlEmailGenerator.prototype.copySassFiles = function copySassFiles() {
+    this.mkdir('app/scss');
+
+    this.copy('scss/variables.scss', 'app/scss/_variables.scss');
+    this.copy('scss/base.scss', 'app/scss/_base.scss');
+    this.copy('scss/main.scss', 'app/scss/_main.scss');
+    this.copy('scss/media-queries.scss', 'app/scss/_media-queries.scss');
+    this.copy('scss/style.scss', 'app/scss/style.scss');
+};
+
