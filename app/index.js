@@ -23,6 +23,18 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
     console.log(this.yeoman);
 
     var prompts = [{
+        type: 'input',
+        name: 'appname',
+        message: 'What\'s the project name?',
+        default: this.appname,
+        validate: function (value) {
+            // Trim input value and check if it's not mepty
+            if (!value.replace(/^\s+/g, '').replace(/\s+$/g, '')) {
+                return 'You need to provide a project name';
+            }
+            return true;
+        }
+    }, {
         type: 'list',
         name: 'emailService',
         message: 'Select the SMTP host to use when sending test emails',
@@ -99,6 +111,7 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
     }];
 
     this.prompt(prompts, function (props) {
+        this.appname             = props.appname;
         this.emailService        = props.emailService;
         this.emailAuthUser       = props.emailAuthUser;
         this.emailAuthPassword   = props.emailAuthPassword;
