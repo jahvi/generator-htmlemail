@@ -84,18 +84,19 @@ module.exports = function (grunt) {
             options: {
                 open: true,
                 hostname: 'localhost',
-                port: 8000
+                port: 8000,
+                livereload: 35729
             },
             dev: {
                 options: {
-                    livereload: 35729,
-                    base: '<%%= paths.src %>'
+                    base: '<%= paths.src %>'
                 }
             },
             dist: {
                 options: {
                     keepalive: true,
-                    base: '<%%= paths.dist %>'
+                    livereload: false,
+                    base: '<%= paths.dist %>'
                 }
             }
         },
