@@ -166,7 +166,7 @@ module.exports = function (grunt) {
             options: {
                 /**
                  * Defaults to sendmail
-                 * Here follows a Gmail SMTP exeample trasport
+                 * Here follows a Gmail SMTP example trasport
                  * @see https://github.com/andris9/Nodemailer
                  */
                 transport: {
