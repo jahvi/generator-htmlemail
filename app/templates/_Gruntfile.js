@@ -24,7 +24,7 @@ module.exports = function (grunt) {
             //enter here yout production domain
             distDomain: '<%= domainProduction %>',
             //this is the default development domain
-            devDomain: 'http://localhost:8000/'
+            devDomain: 'http://<%= connect.hostname %>:<%= connect.port %>/'
         },
 
         /**
