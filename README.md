@@ -91,7 +91,7 @@ The generator comes with some predefined tasks to cover average email developmen
 
 #### `dev` Task
 
-This task runs a watch trigger for changes to the `scss` folder and starts a static HTTP server at `http://localhost:8000` pointing to the `app` folder.
+This task runs a watch trigger for changes to the `scss` folder and starts a static HTTP server at `http://localhost:8000` pointing to the `app` folder. The browser will reload automatically (thanks to the `livereload` task) upon changes to your SCSS or HTML files.
 
 #### `dist` Task
 
