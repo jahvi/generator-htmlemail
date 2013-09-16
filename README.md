@@ -119,6 +119,7 @@ See `Gruntfile.js` source for more options and customizations.
 * Support for adding multiple email targets
 * Support to change transport type
 * Allow users to change the initial template
+* Include SCSS support optionally
 * Add EJS support
 
 ## Contributing
