@@ -123,7 +123,7 @@ See `Gruntfile.js` source for more options and customizations.
 
 ## Contributing
 
-Feel free to submit bugs or pull requests, just make sure to follow the same coding guidelines.
+Feel free to submit bugs or pull requests, just make sure to target the develop branch and follow the same coding style.
 
 ## License
 
