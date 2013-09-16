@@ -33,22 +33,22 @@ module.exports = function (grunt) {
          */
         compass: {
             options: {
-                sassDir: '<%= paths.src %>/scss',
+                sassDir: '<%%= paths.src %>/scss',
                 outputStyle: 'expanded',
                 httpImagesPath: '/img/'
             },
             dev: {
                 options: {
-                    cssDir: '<%= paths.src %>/css',
-                    imagesDir: '<%= paths.src %>/<%= paths.images %>',
+                    cssDir: '<%%= paths.src %>/css',
+                    imagesDir: '<%%= paths.src %>/<%%= paths.images %>',
                     noLineComments: false
                 }
             },
             dist: {
                 options: {
                     force: true,
-                    cssDir: '<%= paths.dist %>/css',
-                    imagesDir: '<%= paths.dist %>/<%= paths.images %>',
+                    cssDir: '<%%= paths.dist %>/css',
+                    imagesDir: '<%%= paths.dist %>/<%%= paths.images %>',
                     noLineComments: true,
                     assetCacheBuster: false
                 }
@@ -61,17 +61,17 @@ module.exports = function (grunt) {
          */
         watch: {
             compass: {
-                files: ['<%= paths.src %>/scss/**/*.scss'],
+                files: ['<%%= paths.src %>/scss/**/*.scss'],
                 tasks: ['compass:dev']
             },
             livereload: {
                 options: {
-                    livereload: '<%= connect.options.livereload %>'
+                    livereload: '<%%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= paths.src %>/<%= paths.email %>',
-                    '<%= paths.src %>/css/{,*/}*.css',
-                    '<%= paths.src %>/<%= paths.images %>/{,*/}*.{png,jpg,jpeg,gif}'
+                    '<%%= paths.src %>/<%%= paths.email %>',
+                    '<%%= paths.src %>/css/{,*/}*.css',
+                    '<%%= paths.src %>/<%%= paths.images %>/{,*/}*.{png,jpg,jpeg,gif}'
                 ]
             }
         },
@@ -89,13 +89,13 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     livereload: 35729,
-                    base: '<%= paths.src %>'
+                    base: '<%%= paths.src %>'
                 }
             },
             dist: {
                 options: {
                     keepalive: true,
-                    base: '<%= paths.dist %>'
+                    base: '<%%= paths.dist %>'
                 }
             }
         },
@@ -105,7 +105,7 @@ module.exports = function (grunt) {
          * ===============================
          */
         clean: {
-            dist: ['<%= paths.dist %>']
+            dist: ['<%%= paths.dist %>']
         },
 
         /**
@@ -116,9 +116,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= paths.src %>/<%= paths.images %>',
+                    cwd: '<%%= paths.src %>/<%%= paths.images %>',
                     src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%= paths.dist %>/<%= paths.images %>'
+                    dest: '<%%= paths.dist %>/<%%= paths.images %>'
                 }]
             }
         },
@@ -131,9 +131,9 @@ module.exports = function (grunt) {
             gif: {
                 files: [{
                     expand: true,
-                    cwd: '<%= paths.src %>/<%= paths.images %>',
+                    cwd: '<%%= paths.src %>/<%%= paths.images %>',
                     src: ['{,*/}*.gif'],
-                    dest: '<%= paths.dist %>/<%= paths.images %>'
+                    dest: '<%%= paths.dist %>/<%%= paths.images %>'
                 }]
             }
         },
@@ -145,16 +145,49 @@ module.exports = function (grunt) {
         premailer: {
             dist: {
                 //source file path
-                src: '<%= paths.src %>/<%= paths.email %>',
+                src: '<%%= paths.src %>/<%%= paths.email %>',
                 // overwrite source file
-                dest: '<%= paths.dist %>/<%= paths.email %>',
+                dest: '<%%= paths.dist %>/<%%= paths.email %>',
                 options: {
                     //accepts any premailer command line option
                     //replace mid dashes `-` with camelCase
                     //ie: --base-url => baseUrl
                     //see https://github.com/alexdunae/premailer/wiki/Premailer-Command-Line-Usage
-                    baseUrl: '<%= paths.distDomain %>'
+                    baseUrl: '<%%= paths.distDomain %>'
                 }
+            }
+        },
+
+        /**
+         * Test Mailer Tasks
+         * ===============================
+         */
+        emailSend: {
+            options: {
+                /**
+                 * Defaults to sendmail
+                 * Here follows a Gmail SMTP exeample trasport
+                 * @see https://github.com/andris9/Nodemailer
+                 */
+                transport: {
+                    type: 'SMTP',
+                    service: '<%= emailService %>',
+                    auth: {
+                        user: '<%= emailAuthUser %>',
+                        pass: '<%= emailAuthPassword %>'
+                    }
+                },
+                // HTML and TXT email
+                // A collection of recipients
+                recipients: [
+                    {
+                        name: '<%= emailRecipientName %>',
+                        email: '<%= emailRecipientEmail %>'
+                    }
+                ]
+            },
+            dist: {
+                src: ['<%%= paths.dist %>/<%%= paths.email %>', '<%%= paths.dist %>/email.txt']
             }
         }
 
@@ -171,6 +204,10 @@ module.exports = function (grunt) {
 
     grunt.loadTasks(path.normalize(__dirname + '/vendor/tasks'));
 
+    // Rename "send" task so we can use the name to run
+    // all required dist tasks before sending the test email
+    grunt.renameTask('send', 'emailSend');
+
     grunt.registerTask('default', 'dev');
 
     grunt.registerTask('dev', [
@@ -186,6 +223,15 @@ module.exports = function (grunt) {
         'compass:dist',
         'premailer:dist',
         'connect:dist'
+    ]);
+
+    grunt.registerTask('send', [
+        'clean',
+        'imagemin',
+        'copy',
+        'compass:dist',
+        'premailer:dist',
+        'emailSend'
     ]);
 
 };

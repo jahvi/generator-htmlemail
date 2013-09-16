@@ -23,14 +23,87 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
     console.log(this.yeoman);
 
     var prompts = [{
-        type: 'confirm',
-        name: 'someOption',
-        message: 'Would you like to enable this option?',
-        default: true
+        type: 'list',
+        name: 'emailService',
+        message: 'Select the SMTP host to use when sending test emails',
+        choices: [
+            'Gmail',
+            'DynectEmail',
+            'hot.ee',
+            'Hotmail',
+            'iCloud',
+            'mail.ee',
+            'Mail.Ru',
+            'Mailgun',
+            'Mailjet',
+            'Mandrill',
+            'Postmark',
+            'QQ',
+            'SendGrid',
+            'SES',
+            'Yahoo',
+            'yandex',
+            'Zoho'
+        ],
+        default: 0
+    }, {
+        type: 'input',
+        name: 'emailAuthUser',
+        message: 'What\'s your SMTP server username?',
+        validate: function (value) {
+            // Trim input value and check if it's not mepty
+            if (!value.replace(/^\s+/g, '').replace(/\s+$/g, '')) {
+                return 'You need to provide a SMTP server username';
+            }
+            return true;
+        }
+    }, {
+        type: 'password',
+        name: 'emailAuthPassword',
+        message: 'What\'s your SMTP server passsword?',
+        validate: function (value) {
+            // Trim input value and check if it's not mepty
+            if (!value.replace(/^\s+/g, '').replace(/\s+$/g, '')) {
+                return 'You need to provide a SMTP server passsword';
+            }
+            return true;
+        }
+    }, {
+        type: 'input',
+        name: 'emailRecipientName',
+        message: 'What\'s the name of the test email recipient?',
+        validate: function (value) {
+            // Trim input value and check if it's not mepty
+            if (!value.replace(/^\s+/g, '').replace(/\s+$/g, '')) {
+                return 'You need to provide an email recipient name';
+            }
+            return true;
+        }
+    }, {
+        type: 'input',
+        name: 'emailRecipientEmail',
+        message: 'What\'s the email of the test email recipient?',
+        validate: function (value) {
+            // Trim input value
+            var email = value.replace(/^\s+/g, '').replace(/\s+$/g, '');
+            // Check if email isn't empty
+            if (!email) {
+                return 'You need to provide an email';
+            }
+            // Check if email is valid
+            if (!email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                return 'You need to provide a valid email';
+            }
+            return true;
+        }
     }];
 
     this.prompt(prompts, function (props) {
-        this.someOption = props.someOption;
+        this.emailService        = props.emailService;
+        this.emailAuthUser       = props.emailAuthUser;
+        this.emailAuthPassword   = props.emailAuthPassword;
+        this.emailRecipientName  = props.emailRecipientName;
+        this.emailRecipientEmail = props.emailRecipientEmail;
 
         cb();
     }.bind(this));
@@ -42,7 +115,7 @@ HtmlEmailGenerator.prototype.prepareMainFiles = function prepareMainFiles() {
     this.mkdir('app/img');
 
     this.template('_package.json', 'package.json');
-    this.copy('Gruntfile.js', 'Gruntfile.js');
+    this.template('_Gruntfile.js', 'Gruntfile.js');
 };
 
 HtmlEmailGenerator.prototype.copyPremailerParser = function copyPremailerParser() {
