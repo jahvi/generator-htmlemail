@@ -35,6 +35,32 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
             return true;
         }
     }, {
+        type: 'input',
+        name: 'domainProduction',
+        message: 'What\'s your production domain?',
+        default: 'http://www.mydomain.com/',
+        validate: function (value) {
+            // Trim input value
+            var domain = value.replace(/^\s+/g, '').replace(/\s+$/g, '');
+            // Check if domain isn't empty
+            if (!domain) {
+                return 'You need to provide a production domain';
+            }
+            // Check if email is valid
+            if (!domain.match(/^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
+                return 'You need to provide a valid domain';
+            }
+            return true;
+        },
+        filter: function (value) {
+            // Make sure domain ends with a trailing slash
+            if (value[value.length - 1] !== '/') {
+                return value + '/';
+            }
+            return value;
+
+        }
+    }, {
         type: 'list',
         name: 'emailService',
         message: 'Select the SMTP host to use when sending test emails',
@@ -112,6 +138,7 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
 
     this.prompt(prompts, function (props) {
         this.appname             = props.appname;
+        this.domainProduction    = props.domainProduction;
         this.emailService        = props.emailService;
         this.emailAuthUser       = props.emailAuthUser;
         this.emailAuthPassword   = props.emailAuthPassword;

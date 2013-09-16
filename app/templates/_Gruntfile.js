@@ -22,7 +22,7 @@ module.exports = function (grunt) {
             //main email file
             email: 'index.html',
             //enter here yout production domain
-            distDomain: 'http://www.mydomain.com/',
+            distDomain: '<%= domainProduction %>',
             //this is the default development domain
             devDomain: 'http://localhost:8000/'
         },
