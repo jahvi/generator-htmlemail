@@ -115,7 +115,6 @@ See `Gruntfile.js` source for more options and customizations.
 
 * Prefix domain with http:// automatically if needed
 * Run tasks concurrently when possible
-* Run tasks only when needed
 * Support for adding multiple email targets
 * Support to change transport type
 * Allow users to change the initial template
