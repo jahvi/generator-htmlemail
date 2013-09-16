@@ -89,14 +89,14 @@ module.exports = function (grunt) {
             },
             dev: {
                 options: {
-                    base: '<%= paths.src %>'
+                    base: '<%%= paths.src %>'
                 }
             },
             dist: {
                 options: {
                     keepalive: true,
                     livereload: false,
-                    base: '<%= paths.dist %>'
+                    base: '<%%= paths.dist %>'
                 }
             }
         },
