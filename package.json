@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "HTML Email boilerplate generator for Yeoman",
   "keywords": [
-    "yeoman-generator", "email", "html"
+    "yeoman-generator", "email", "html", "grunt", "premailer"
   ],
   "homepage": "https://github.com/jahvi/generator-htmlemail",
   "bugs": "https://github.com/jahvi/generator-htmlemail/issues",
