@@ -43,6 +43,10 @@ This generator will ask you a few questions about your project before scaffoldin
 
 Used in the generated `package.json` file as the name of the project, by default this is the folder name.
 
+#### [?] What template do you want to use?
+
+Enter the URL of the boilerplate HTML file you want to use for your email, this can be the "raw" version of a github file or gist. Defaults to a modified version of [HTML Email Boilerplate](http://htmlemailboilerplate.com/).
+
 #### [?] What's your production domain?
 
 Used by the premailer task to rewrite your assets url, e.g:
@@ -70,8 +74,6 @@ Used to authenticate with the SMTP service.
 The name and email address of the account where the test email will be sent.
 
 ### Sources
-
-This generator comes with a customized version of the [HTML Email Boilerplate](http://htmlemailboilerplate.com/).
 
 Sources are located in the `app` folder:
 
