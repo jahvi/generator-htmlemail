@@ -36,6 +36,24 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
         }
     }, {
         type: 'input',
+        name: 'htmlTemplate',
+        message: 'What template do you want to use?',
+        default: 'https://gist.github.com/jahvi/6595019/raw/b982a85c71c7f592d9d6798733a52ecf1a524895/email-template.html',
+        validate: function (value) {
+            // Trim input value
+            var domain = value.replace(/^\s+/g, '').replace(/\s+$/g, '');
+            // Check if domain isn't empty
+            if (!domain) {
+                return 'You need to provide a production domain';
+            }
+            // Check if domain is valid
+            if (!domain.match(/^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
+                return 'You need to provide a valid domain';
+            }
+            return true;
+        }
+    }, {
+        type: 'input',
         name: 'domainProduction',
         message: 'What\'s your production domain?',
         default: 'http://www.mydomain.com/',
@@ -138,6 +156,7 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
 
     this.prompt(prompts, function (props) {
         this.appname             = props.appname;
+        this.htmlTemplate        = props.htmlTemplate;
         this.domainProduction    = props.domainProduction;
         this.emailService        = props.emailService;
         this.emailAuthUser       = props.emailAuthUser;
@@ -162,8 +181,19 @@ HtmlEmailGenerator.prototype.copyPremailerParser = function copyPremailerParser(
     this.directory('vendor', 'vendor');
 };
 
-HtmlEmailGenerator.prototype.copyEmailTemplate = function copyEmailTemplate() {
-    this.copy('index.html', 'app/index.html');
+HtmlEmailGenerator.prototype.fetchEmailTemplate = function fetchEmailTemplate() {
+    var request = require('request'),
+        self    = this,
+        cb      = self.async();
+
+    self.log.writeln('Fetching template...');
+
+    request.get(this.htmlTemplate, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            self.write('app/index.html', body);
+        }
+        cb();
+    });
 };
 
 HtmlEmailGenerator.prototype.copySassFiles = function copySassFiles() {

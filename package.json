@@ -3,7 +3,11 @@
   "version": "0.2.1",
   "description": "HTML Email boilerplate generator for Yeoman",
   "keywords": [
-    "yeoman-generator", "email", "html", "grunt", "premailer"
+    "yeoman-generator",
+    "email",
+    "html",
+    "grunt",
+    "premailer"
   ],
   "homepage": "https://github.com/jahvi/generator-htmlemail",
   "bugs": "https://github.com/jahvi/generator-htmlemail/issues",
@@ -21,7 +25,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.13.0"
+    "yeoman-generator": "~0.13.0",
+    "request": "~2.27.0"
   },
   "devDependencies": {
     "mocha": "~1.12.0"
