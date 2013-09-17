@@ -64,7 +64,7 @@ HtmlEmailGenerator.prototype.askFor = function askFor() {
             if (!domain) {
                 return 'You need to provide a production domain';
             }
-            // Check if email is valid
+            // Check if domain is valid
             if (!domain.match(/^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
                 return 'You need to provide a valid domain';
             }
