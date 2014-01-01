@@ -144,18 +144,12 @@ module.exports = function (grunt) {
          * ===============================
          */
         premailer: {
+            options: {
+                baseUrl: '<%%= paths.distDomain %>'
+            },
             dist: {
-                //source file path
                 src: '<%%= paths.src %>/<%%= paths.email %>',
-                // overwrite source file
-                dest: '<%%= paths.dist %>/<%%= paths.email %>',
-                options: {
-                    //accepts any premailer command line option
-                    //replace mid dashes `-` with camelCase
-                    //ie: --base-url => baseUrl
-                    //see https://github.com/alexdunae/premailer/wiki/Premailer-Command-Line-Usage
-                    baseUrl: '<%%= paths.distDomain %>'
-                }
+                dest: '<%%= paths.dist %>/<%%= paths.email %>'
             }
         },
 
@@ -201,6 +195,7 @@ module.exports = function (grunt) {
         'grunt-contrib-imagemin',
         'grunt-contrib-copy',
         'grunt-contrib-clean',
+        'grunt-premailer',
     ].forEach(grunt.loadNpmTasks);
 
     grunt.loadTasks(path.normalize(__dirname + '/vendor/tasks'));
