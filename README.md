@@ -63,7 +63,7 @@ Becomes:
 
 #### [?] Select the SMTP host to use when sending test emails
 
-Used to set up the emailSend transport service.
+Used to set up the nodemailer transport service.
 
 #### [?] What's your SMTP server username and passsword?
 
