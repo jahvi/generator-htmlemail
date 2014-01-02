@@ -7,7 +7,8 @@
     "email",
     "html",
     "grunt",
-    "premailer"
+    "premailer",
+    "nodemailer"
   ],
   "homepage": "https://github.com/jahvi/generator-htmlemail",
   "bugs": "https://github.com/jahvi/generator-htmlemail/issues",
