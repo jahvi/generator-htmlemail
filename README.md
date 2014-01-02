@@ -105,7 +105,7 @@ Images are optimized with jpegtran and OptiPNG.
 
 This task sends the compiled email to any configured recipient. This basically performs the same actions as the `dist` task only that instead of running a static HTTP server it'll try to send the actual email.
 
-Yeoman will ask you for your email transport settings and recipients on startup but if you wish to further customize these options refer to the `sendEmail` tasks in `Gruntfile.js`.
+Yeoman will ask you for your email transport settings and recipients on startup but if you wish to further customize these options refer to the `nodemailer` tasks in `Gruntfile.js`.
 
 ### Tasks Customization
 
