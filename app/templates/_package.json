@@ -11,7 +11,7 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-premailer": "~0.2.3",
-    "nodemailer": "~0.5.2"
+    "grunt-nodemailer": "~0.2.0"
   },
   "engines": {
     "node": ">=0.8.0"

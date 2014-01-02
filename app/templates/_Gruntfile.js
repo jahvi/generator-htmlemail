@@ -1,8 +1,6 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var path = require('path');
-
     // Project configuration.
     grunt.initConfig({
 
@@ -157,23 +155,18 @@ module.exports = function (grunt) {
          * Test Mailer Tasks
          * ===============================
          */
-        emailSend: {
+        nodemailer: {
             options: {
-                /**
-                 * Defaults to sendmail
-                 * Here follows a Gmail SMTP example trasport
-                 * @see https://github.com/andris9/Nodemailer
-                 */
                 transport: {
                     type: 'SMTP',
-                    service: '<%= emailService %>',
-                    auth: {
-                        user: '<%= emailAuthUser %>',
-                        pass: '<%= emailAuthPassword %>'
+                    options: {
+                        service: '<%= emailService %>',
+                        auth: {
+                            user: '<%= emailAuthUser %>',
+                            pass: '<%= emailAuthPassword %>'
+                        }
                     }
                 },
-                // HTML and TXT email
-                // A collection of recipients
                 recipients: [
                     {
                         name: '<%= emailRecipientName %>',
@@ -182,7 +175,7 @@ module.exports = function (grunt) {
                 ]
             },
             dist: {
-                src: ['<%%= paths.dist %>/<%%= paths.email %>', '<%%= paths.dist %>/email.txt']
+                src: ['<%%= paths.dist %>/<%%= paths.email %>']
             }
         }
 
@@ -196,13 +189,8 @@ module.exports = function (grunt) {
         'grunt-contrib-copy',
         'grunt-contrib-clean',
         'grunt-premailer',
+        'grunt-nodemailer',
     ].forEach(grunt.loadNpmTasks);
-
-    grunt.loadTasks(path.normalize(__dirname + '/vendor/tasks'));
-
-    // Rename "send" task so we can use the name to run
-    // all required dist tasks before sending the test email
-    grunt.renameTask('send', 'emailSend');
 
     grunt.registerTask('default', 'dev');
 
@@ -227,7 +215,7 @@ module.exports = function (grunt) {
         'copy',
         'compass:dist',
         'premailer:dist',
-        'emailSend'
+        'nodemailer'
     ]);
 
 };
