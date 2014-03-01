@@ -4,7 +4,7 @@ var util   = require('util'),
     path   = require('path'),
     yeoman = require('yeoman-generator');
 
-var HtmlEmailGenerator = module.exports = function HtmlEmailGenerator(args, options, config) {
+var HtmlEmailGenerator = module.exports = function HtmlEmailGenerator(args, options) {
     yeoman.generators.Base.apply(this, arguments);
 
     this.on('end', function () {
