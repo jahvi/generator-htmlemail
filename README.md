@@ -107,18 +107,6 @@ Yeoman will ask you for your email transport settings and recipients on startup 
 
 See `Gruntfile.js` source for more options and customizations.
 
-## Roadmap
-
-### 1.0.0
-
-* Prefix domain with http:// automatically if needed
-* Run tasks concurrently when possible
-* Support for adding multiple email targets
-* Support to change transport type
-* Allow users to change the initial template
-* Include SCSS support optionally
-* Add EJS support
-
 ## Contributing
 
 Feel free to submit bugs or pull requests, just make sure to target the develop branch and follow the same coding style.
