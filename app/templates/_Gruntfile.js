@@ -200,7 +200,7 @@ module.exports = function (grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('dist', [
+    grunt.registerTask('build', [
         'clean',
         'imagemin',
         'copy',
