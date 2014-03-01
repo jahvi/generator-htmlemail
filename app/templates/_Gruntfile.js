@@ -116,22 +116,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%%= paths.src %>/<%%= paths.images %>',
-                    src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%%= paths.dist %>/<%%= paths.images %>'
-                }]
-            }
-        },
-
-        /**
-         * Copy gif files Tasks
-         * ===============================
-         */
-        copy: {
-            gif: {
-                files: [{
-                    expand: true,
-                    cwd: '<%%= paths.src %>/<%%= paths.images %>',
-                    src: ['{,*/}*.gif'],
+                    src: '{,*/}*.{png,jpg,jpeg,gif}',
                     dest: '<%%= paths.dist %>/<%%= paths.images %>'
                 }]
             }
@@ -186,7 +171,6 @@ module.exports = function (grunt) {
         'grunt-contrib-watch',
         'grunt-contrib-compass',
         'grunt-contrib-imagemin',
-        'grunt-contrib-copy',
         'grunt-contrib-clean',
         'grunt-premailer',
         'grunt-nodemailer',
@@ -203,7 +187,6 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean',
         'imagemin',
-        'copy',
         'compass:dist',
         'premailer:dist',
         'connect:dist'
@@ -212,7 +195,6 @@ module.exports = function (grunt) {
     grunt.registerTask('send', [
         'clean',
         'imagemin',
-        'copy',
         'compass:dist',
         'premailer:dist',
         'nodemailer'
