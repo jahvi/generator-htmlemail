@@ -1,7 +1,8 @@
 'use strict';
 
 var path   = require('path'),
-    yeoman = require('yeoman-generator');
+    yeoman = require('yeoman-generator'),
+    defaultTemplate = 'https://gist.githubusercontent.com/jahvi/6595019/raw/6d0731cd852a006686ea79c53db3bdb4a779ce27/email-template.html';
 
 var HtmlEmailGenerator = yeoman.generators.Base.extend({
     init: function () {
@@ -36,13 +37,13 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
             type: 'input',
             name: 'htmlTemplate',
             message: 'What template do you want to use?',
-            default: 'https://gist.github.com/jahvi/6595019/raw/b982a85c71c7f592d9d6798733a52ecf1a524895/email-template.html',
+            default: defaultTemplate,
             validate: function (value) {
                 // Trim input value
                 var domain = value.replace(/^\s+/g, '').replace(/\s+$/g, '');
                 // Check if domain isn't empty
                 if (!domain) {
-                    return 'You need to provide a production domain';
+                    return 'You need to provide a domain';
                 }
                 // Check if domain is valid
                 if (!domain.match(/^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)) {
@@ -180,27 +181,27 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
     },
 
     fetchEmailTemplate: function () {
-        var request = require('request'),
-            self    = this,
-            done    = self.async();
+        if (this.htmlTemplate === defaultTemplate) {
+            this.template('_index.html', 'app/index.html');
+        } else {
+            var request = require('request'),
+                self    = this,
+                done    = self.async();
 
-        self.log.writeln('Fetching template...');
+            self.log.writeln('Fetching template...');
 
-        request.get(this.htmlTemplate, function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-                self.write('app/index.html', body);
-            }
-            done();
-        });
+            request.get(this.htmlTemplate, function (error, response, body) {
+                if (!error && response.statusCode === 200) {
+                    self.write('app/index.html', body);
+                }
+                done();
+            });
+        }
     },
 
     copySassFiles: function () {
         this.mkdir('app/scss');
 
-        this.copy('scss/variables.scss', 'app/scss/_variables.scss');
-        this.copy('scss/base.scss', 'app/scss/_base.scss');
-        this.copy('scss/main.scss', 'app/scss/_main.scss');
-        this.copy('scss/media-queries.scss', 'app/scss/_media-queries.scss');
         this.copy('scss/style.scss', 'app/scss/style.scss');
     }
 });

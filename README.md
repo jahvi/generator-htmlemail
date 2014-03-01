@@ -79,10 +79,6 @@ Sources are located in the `app` folder:
 
 * `index.html`: HTML boilerplate
 * `scss/`: SCSS folder
-    * `_variables.scss`: boilerplate style variables
-    * `_base.scss`: common styles
-    * `_media-queries.scss`: optional media queries for responsive emails
-    * `_main.scss`: **your email styles**
     * `style.scss`: glue stylesheet, don't edit it directly
 * `img`: source images of your email
 * `css`: destination folder of compiled SCSS sources
