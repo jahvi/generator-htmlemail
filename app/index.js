@@ -172,6 +172,8 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
         this.mkdir('app/css');
         this.mkdir('app/img');
 
+        this.template('gitignore', '.gitignore');
+        this.template('_nodemailer-options.json', 'config/nodemailer-options.json');
         this.template('_package.json', 'package.json');
         this.template('_Gruntfile.js', 'Gruntfile.js');
     },

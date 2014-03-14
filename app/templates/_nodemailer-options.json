@@ -1,0 +1,19 @@
+{
+	"transport": {
+	 	"type": "SMTP",
+	 	"options": {
+	    "service": "<%= emailService %>",
+	    "auth": {
+	      "user": "<%= emailAuthUser %>",
+	      "pass": "<%= emailAuthPassword %>"
+	    }
+	 	}
+	},
+	"message": {
+	    "from": "<John Doe> john.doe@gmail.com"
+	},
+	"recipients": [{
+	    "name": "<%= emailRecipientName %>",
+	    "email": "<%= emailRecipientEmail %>"
+	}]
+}

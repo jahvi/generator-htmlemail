@@ -25,6 +25,9 @@ module.exports = function (grunt) {
             devDomain: 'http://<%%= connect.options.hostname %>:<%%= connect.options.port %>/'
         },
 
+        // Nodemailer Configuration
+        mailConfig: grunt.file.readJSON('config/nodemailer-options.json'),
+
         /**
          * SCSS Compilation Tasks
          * ===============================
@@ -141,24 +144,7 @@ module.exports = function (grunt) {
          * ===============================
          */
         nodemailer: {
-            options: {
-                transport: {
-                    type: 'SMTP',
-                    options: {
-                        service: '<%= emailService %>',
-                        auth: {
-                            user: '<%= emailAuthUser %>',
-                            pass: '<%= emailAuthPassword %>'
-                        }
-                    }
-                },
-                recipients: [
-                    {
-                        name: '<%= emailRecipientName %>',
-                        email: '<%= emailRecipientEmail %>'
-                    }
-                ]
-            },
+            options: '<%%= mailConfig %>',
             dist: {
                 src: ['<%%= paths.dist %>/<%%= paths.email %>']
             }
