@@ -25,6 +25,9 @@ module.exports = function (grunt) {
             devDomain: 'http://<%%= connect.options.hostname %>:<%%= connect.options.port %>/'
         },
 
+        // Nodemailer Configuration
+        mailConfig: grunt.file.readJSON('config/nodemailer-options.json'),
+
         /**
          * SCSS Compilation Tasks
          * ===============================
@@ -116,22 +119,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%%= paths.src %>/<%%= paths.images %>',
-                    src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%%= paths.dist %>/<%%= paths.images %>'
-                }]
-            }
-        },
-
-        /**
-         * Copy gif files Tasks
-         * ===============================
-         */
-        copy: {
-            gif: {
-                files: [{
-                    expand: true,
-                    cwd: '<%%= paths.src %>/<%%= paths.images %>',
-                    src: ['{,*/}*.gif'],
+                    src: '{,*/}*.{png,jpg,jpeg,gif}',
                     dest: '<%%= paths.dist %>/<%%= paths.images %>'
                 }]
             }
@@ -156,24 +144,7 @@ module.exports = function (grunt) {
          * ===============================
          */
         nodemailer: {
-            options: {
-                transport: {
-                    type: 'SMTP',
-                    options: {
-                        service: '<%= emailService %>',
-                        auth: {
-                            user: '<%= emailAuthUser %>',
-                            pass: '<%= emailAuthPassword %>'
-                        }
-                    }
-                },
-                recipients: [
-                    {
-                        name: '<%= emailRecipientName %>',
-                        email: '<%= emailRecipientEmail %>'
-                    }
-                ]
-            },
+            options: '<%%= mailConfig %>',
             dist: {
                 src: ['<%%= paths.dist %>/<%%= paths.email %>']
             }
@@ -186,7 +157,6 @@ module.exports = function (grunt) {
         'grunt-contrib-watch',
         'grunt-contrib-compass',
         'grunt-contrib-imagemin',
-        'grunt-contrib-copy',
         'grunt-contrib-clean',
         'grunt-premailer',
         'grunt-nodemailer',
@@ -200,10 +170,9 @@ module.exports = function (grunt) {
         'watch'
     ]);
 
-    grunt.registerTask('dist', [
+    grunt.registerTask('build', [
         'clean',
         'imagemin',
-        'copy',
         'compass:dist',
         'premailer:dist',
         'connect:dist'
@@ -212,7 +181,6 @@ module.exports = function (grunt) {
     grunt.registerTask('send', [
         'clean',
         'imagemin',
-        'copy',
         'compass:dist',
         'premailer:dist',
         'nodemailer'
