@@ -196,9 +196,13 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
     },
 
     fetchEmailTemplate: function () {
-        if (this.htmlTemplate === defaultTemplate) {
+        if (this.htmlTemplate === defaultTemplate && this.framework === 'None') {
             this.template('_index.html', 'app/index.html');
-        } else {
+        }
+        else if (this.htmlTemplate === defaultTemplate && this.framework === 'Zurb Ink') {
+            this.template('_zurb-basic.html', 'app/index.html');
+        }
+        else {
             var request = require('request'),
                 self    = this,
                 done    = self.async();
