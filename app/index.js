@@ -1,7 +1,9 @@
 'use strict';
 
 var path   = require('path'),
+    fs = require('fs'),
     yeoman = require('yeoman-generator'),
+    wiredep = require('wiredep'),
     defaultTemplate = 'https://gist.githubusercontent.com/jahvi/6595019/raw/6d0731cd852a006686ea79c53db3bdb4a779ce27/email-template.html';
 
 var HtmlEmailGenerator = yeoman.generators.Base.extend({
@@ -151,7 +153,18 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
                 }
                 return true;
             }
-        }];
+        },
+        {
+            type: 'list',
+            name: 'framework',
+            message: 'Select framework',
+            choices: [
+            'None',
+            'Zurb Ink'
+            ],
+            default: 0
+        }
+        ];
 
         this.prompt(prompts, function (props) {
             this.appname             = props.appname;
@@ -162,6 +175,7 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
             this.emailAuthPassword   = props.emailAuthPassword;
             this.emailRecipientName  = props.emailRecipientName;
             this.emailRecipientEmail = props.emailRecipientEmail;
+            this.framework           = props.framework;
 
             done();
         }.bind(this));
@@ -174,6 +188,7 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
 
         this.template('_package.json', 'package.json');
         this.template('_Gruntfile.js', 'Gruntfile.js');
+        this.template('_bower.json', 'bower.json');
     },
 
     copyPremailerParser: function () {
@@ -203,7 +218,22 @@ var HtmlEmailGenerator = yeoman.generators.Base.extend({
         this.mkdir('app/scss');
 
         this.copy('scss/style.scss', 'app/scss/style.scss');
-    }
+    },
+
+    runNpm: function() {
+        var done = this.async();
+        this.npmInstall('', function() {
+            done();
+        });
+    },
+
+    installBowerDeps: function() {
+        var  done = this.async();
+        this.bowerInstall('', function() {
+            this.spawnCommand('grunt', ['wiredep']);
+            done();
+        }.bind(this));
+    },
 });
 
 module.exports = HtmlEmailGenerator;

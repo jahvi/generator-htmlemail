@@ -74,6 +74,27 @@ module.exports = function (grunt) {
             }
         },
 
+        wiredep: {
+            target: {
+
+                // Point to the files that should be updated when
+                // you run `grunt wiredep`
+                src: [
+                    '<%%= paths.src %>/scss/style.scss',  // .scss & .sass support...
+                ],
+
+                // Optional:
+                // ---------
+                cwd: '',
+                dependencies: true,
+                devDependencies: false,
+                exclude: [],
+                fileTypes: {},
+                ignorePath: '',
+                overrides: {}
+            }
+        },
+
         /**
          * Server Tasks
          * ===============================
@@ -174,6 +195,7 @@ module.exports = function (grunt) {
         'grunt-contrib-clean',
         'grunt-premailer',
         'grunt-nodemailer',
+        'grunt-wiredep'
     ].forEach(grunt.loadNpmTasks);
 
     grunt.registerTask('default', 'dev');

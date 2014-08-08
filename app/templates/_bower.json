@@ -1,0 +1,10 @@
+{
+  "name": "<%= _.slugify(appname) %>",
+  "version": "0.0.0",
+  "dependencies": {
+    <% if (framework === 'Zurb Ink') { %>
+        "ink": "*"
+    <% } %>
+  }
+}
+
