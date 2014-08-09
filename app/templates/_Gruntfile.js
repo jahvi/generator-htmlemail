@@ -80,7 +80,7 @@ module.exports = function (grunt) {
          */
         connect: {
             options: {
-                open: '<%= paths.devDomain %>/<%= paths.email %>',
+                open: '<%%= paths.devDomain %>/<%%= paths.email %>',
                 hostname: 'localhost',
                 port: 8000,
                 livereload: 35729
