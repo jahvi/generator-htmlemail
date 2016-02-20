@@ -103,6 +103,15 @@ This task sends the compiled email to any configured recipient. This basically p
 
 Yeoman will ask you for your email transport settings and recipients on startup but if you wish to further customize these options refer to the `nodemailer` tasks in `Gruntfile.js`.
 
+### Docker
+
+A standalone `Dockerfile` is included.
+
+```
+docker build -t htmlemail .
+docker run -t -i htmlemail yo htmlemail
+```
+
 ### Tasks Customization
 
 See `Gruntfile.js` source for more options and customizations.
